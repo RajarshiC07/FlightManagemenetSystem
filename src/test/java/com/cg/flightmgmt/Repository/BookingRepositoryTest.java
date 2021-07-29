@@ -1,6 +1,6 @@
 package com.cg.flightmgmt.Repository;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
