@@ -29,14 +29,14 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public Users viewUser(BigInteger userId)
 	{
-		Users user=userdao.findById(userId).orElse(null);
+		Users user = userdao.findById(userId).orElse(null);
 		return user;
 	}
 	
 	@Override
 	public Users addUser(Users user)
 	{
-		Users userdb=userdao.findById(user.getUserId()).get();
+		Users userdb = userdao.findById(user.getUserId()).get();
 		if(Objects.nonNull(userdb))
 		{
 			throw new RecordAlreadyPresentException("The user is already present.");
