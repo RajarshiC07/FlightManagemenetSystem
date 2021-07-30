@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public Users addUser(Users user)
 	{
-		Users userdb = userdao.findById(user.getUserId()).get();
+		Users userdb = userdao.findById(user.getUserId()).orElse(null);
 		if(Objects.nonNull(userdb))
 		{
 			throw new RecordAlreadyPresentException("The user is already present.");
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public Users updateUser(Users user)
 	{
-		Users userdb = userdao.findById(user.getUserId()).get();
+		Users userdb = userdao.findById(user.getUserId()).orElse(null);
 		
 		if(Objects.isNull(userdb))
 		{
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void validateUser(Users user)
 	{
-		String s=String.valueOf(user.getUserPhone());
+		String s=String.valueOf(user.getUserPhone().intValue());
 		Pattern p=Pattern.compile("^[1-9]{1}[0-9]{9}$");
 		Matcher match=p.matcher(s);
 		if(s.length()!=10 && !match.matches())

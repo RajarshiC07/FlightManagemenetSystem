@@ -32,16 +32,17 @@ public class AirportServiceImpl implements AirportService{
 	
 	public Airport viewAirport(String airportCode)
 	{
-		Airport airport = airportDao.getById(airportCode);
-		if(!Objects.isNull(airport))
-			return airport;
-		else
+		Airport airport = airportDao.findById(airportCode).orElse(null);
+		System.out.println(airport.getAirportCode());
+		if(Objects.isNull(airport))
 			throw new AirportNotFoundException("Airport with airport code "+airportCode+" does not exists");
+		else
+			return airport;
 	}
 	
 	public ResponseEntity<?> addAirport(Airport airport)
 	{
-		if(Objects.nonNull(airportDao.getById(airport.getAirportCode())))
+		if(Objects.nonNull(airportDao.findById(airport.getAirportCode()).orElse(null)))
 			throw new RecordAlreadyPresentException("The airport with airport code "+airport.getAirportCode()+" already exists");
 		else
 		{

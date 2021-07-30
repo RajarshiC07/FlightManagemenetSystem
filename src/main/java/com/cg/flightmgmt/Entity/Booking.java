@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,6 +42,7 @@ public class Booking {
 	
 	@Builder.Default
 	@OneToMany(mappedBy="pnrNumber", targetEntity=Passenger.class, cascade=CascadeType.ALL)
+	@JsonIgnore
 	private List <Passenger>passengerList = new ArrayList<Passenger>();
 	
 	@Column(name="ticket_Cost")

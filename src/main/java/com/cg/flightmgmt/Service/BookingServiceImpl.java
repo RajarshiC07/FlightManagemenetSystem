@@ -25,7 +25,8 @@ public class BookingServiceImpl implements BookingService{
 	@Override
 	public Booking addBooking(Booking booking) {
 		
-		if(Objects.nonNull(bookingDao.getById(booking.getBookingId())))
+		Booking b = bookingDao.findById(booking.getBookingId()).orElse(null);
+		if(Objects.nonNull(b))
 		{
 			throw new RecordAlreadyPresentException("Booking already done.");
 		}
@@ -37,7 +38,7 @@ public class BookingServiceImpl implements BookingService{
 	@Override
 	public Booking modifyBooking(Booking booking) {
 		
-		Booking book = bookingDao.findById(booking.getBookingId()).get();
+		Booking book = bookingDao.findById(booking.getBookingId()).orElse(null);
 		
 		if(Objects.isNull(book)) {
 			throw new BookingNotFoundException("Booking not available");
@@ -117,6 +118,15 @@ public class BookingServiceImpl implements BookingService{
         {
         	throw new BookingNotFoundException("No available seats");
         }
+        List<Passenger> l=booking.getPassengerList();
+        if(l.size()>0)
+        {
+        	 for(Passenger passenger :l)
+        	 {
+        		 validatePassenger(passenger);
+        	 }
+        }
+       
 	}
 	
 	@Override
